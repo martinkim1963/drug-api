@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model MediToken {
+  id               Int      @id @default(autoincrement())
+  approveMessage   String // "{\"result\":\"SUCCESS\"}" 형태의 JSON 문자열
+  seed             String // Base64 문자열
+  validityDateTime DateTime // ISO datetime 또는 변환 필요
+  publicKey        String // RSA 공개키 PEM 문자열
+  token            String // 인증 토큰
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
